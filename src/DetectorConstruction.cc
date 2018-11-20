@@ -142,18 +142,24 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 //
 
 // Scint
-  const G4int nEntries = 38;
+  const G4int nEntries = 46;
   G4double PhotonEnergy[nEntries] =
-            { 3.2627*eV, 3.1791*eV, 3.0996*eV, 3.024*eV, 2.952*eV,
+             {3.353*eV, 3.446*eV, 3.545*eV, 3.649*eV,
+              3.760*eV, 3.877*eV, 4.002*eV, 4.136*eV,
+              
+              3.2627*eV, 3.1791*eV, 3.0996*eV, 3.024*eV,  2.952*eV,
               2.8833*eV, 2.8178*eV, 2.7552*eV, 2.6953*eV, 2.6379*eV,
-              2.583*eV, 2.5303*eV, 2.48*eV, 2.431*eV, 2.3843*eV,
-              2.3393*eV, 2.296*eV, 2.254*eV, 2.214*eV, 2.1751*eV,
+              2.583*eV,  2.5303*eV, 2.48*eV,   2.431*eV,  2.3843*eV,
+              2.3393*eV, 2.296*eV,  2.254*eV,  2.214*eV,  2.1751*eV,
               2.1376*eV, 2.1014*eV, 2.0664*eV, 2.0325*eV, 1.9997*eV,
               1.9678*eV, 1.9372*eV, 1.9074*eV, 1.8785*eV, 1.8505*eV,
               1.8233*eV, 1.7969*eV, 1.7712*eV, 1.7462*eV, 1.722*eV,
               1.6984*eV, 1.6754*eV, 1.6531*eV};
   G4double RefractiveIndex1[nEntries] =
-            { 1.84208, 1.83556,  1.82965, 1.82427,  1.81936,
+             {1.8523,   1.8527,   1.8535,   1.8540,
+              1.8545,   1.8550,   1.8555,   1.8563,
+           
+              1.84208, 1.83556,  1.82965, 1.82427,  1.81936,
               1.81486, 1.81072,  1.80691, 1.80339,  1.80013,
               1.79711, 1.7943,  1.79168, 1.78923,  1.78695,
               1.78481, 1.7828,  1.78091, 1.77914,  1.77747,
@@ -161,17 +167,22 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
               1.7692, 1.76807,  1.76699, 1.76596,  1.76498,
               1.76405, 1.76316, 1.76231, 1.7615, 1.76072,
               1.75998, 1.75927, 1.75859};
-  G4double Absorption1[nEntries] =
-            { 5.0*m, 5.0*m, 5.0*m, 5.0*m, 5.0*m,
+  G4double Absorption1[nEntries] =                  //http://hypernews.slac.stanford.edu:5090/HyperNews/geant4/get/opticalphotons/54.html
+             {5.0*m, 5.0*m, 5.0*m, 5.0*m, 
+              5.0*m, 5.0*m, 5.0*m, 5.0*m,
+
               5.0*m, 5.0*m, 5.0*m, 5.0*m, 5.0*m,
               5.0*m, 5.0*m, 5.0*m, 5.0*m, 5.0*m,
               5.0*m, 5.0*m, 5.0*m, 5.0*m, 5.0*m,
               5.0*m, 5.0*m, 5.0*m, 5.0*m, 5.0*m,
               5.0*m, 5.0*m, 5.0*m, 5.0*m, 5.0*m,
               5.0*m, 5.0*m, 5.0*m, 5.0*m, 5.0*m,
-           5.0*m, 5.0*m, 5.0*m};
+              5.0*m, 5.0*m, 5.0*m, 5.0*m, 5.0*m,
+              5.0*m, 5.0*m, 5.0*m};
   G4double ScintilFast[nEntries] =
-            { 0.081731856, 0.100158264, 0.108523626, 0.113045444, 0.11304544,
+            { 0.000134, 0.004432, 0.053991, 0.241971, 0.398942, 
+              0.000134, 0.004432,0.053991,
+              0.081731856, 0.100158264, 0.108523626, 0.113045444, 0.11304544,
               0.104001809, 0.08907981, 0.077436129, 0.058783631, 0.045218178,
               0.03572236, 0.027130907, 0.019443816, 0.013000226, 0.009156681,
               0.004521818, 0.0, 0.0, 0.0, 0.0,
@@ -179,6 +190,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
               0.0, 0.0, 0.0, 0.0, 0.0,
               0.0, 0.0, 0.0, 0.0, 0.0,
               0.0, 0.0, 0.0};
+
   G4MaterialPropertiesTable* myMPT1 = new G4MaterialPropertiesTable();
   myMPT1->AddProperty("RINDEX",       PhotonEnergy, RefractiveIndex1,nEntries);
   myMPT1->AddProperty("ABSLENGTH",    PhotonEnergy, Absorption1,     nEntries);
@@ -290,13 +302,13 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
         { 1.92, 2.38, 2.61, 2.7, 3., 3., 3.23, 3.12, 3.01, 2.96, 2.95, 2.95, 2.96};
   G4double IrefractiveIndex_PC[nEntries2] = 
         { 1.69, 1.71, 1.53, 1.5, 1.34, 1.06, 0.86, 0.53, 0.42, 0.37, 0.35, 0.34, 0.33};
-  //G4double absorption_PC[nEntries2] = 
-  //      { 10*m, 10*m };
+  G4double eff_SPC[nEntries2] = {0.302855808 ,0.272603508 ,0.256462766 ,0.239815267 ,0.196891892 
+                    ,0.157011213 ,0.088752156 ,0.043294997 ,0.002349051 ,0.002200259 ,0.0 ,0.0 ,0.0};
 
   G4MaterialPropertiesTable* myPC = new G4MaterialPropertiesTable();
   myPC->AddProperty("IRINDEX", photonEnergy_PC, IrefractiveIndex_PC, nEntries2);
   myPC->AddProperty("RINDEX", photonEnergy_PC, refractiveIndex_PC, nEntries2);
- // myGlass->AddProperty("ABSLENGTH", photonEnergy_PC, absorption_PC, nEntries2);
+  myPC->AddProperty("EFFICIENCY", photonEnergy_PC, eff_SPC, nEntries2);
   KCsSb->SetMaterialPropertiesTable(myPC);
 
 
@@ -381,6 +393,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
 // PC surface
 //
+/*
   G4OpticalSurface* opPCSurface = new G4OpticalSurface("PCSurface");
   opPCSurface->SetType(dielectric_metal);
   opPCSurface->SetFinish(polished);
@@ -409,7 +422,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   G4OpticalSurface* opticalSurface = dynamic_cast <G4OpticalSurface*>
         (PCSurface->GetSurface(PC_phys,Scint_phys)-> GetSurfaceProperty());
-
+*/
 // GEM -----------------------------------------
 
   std::string layerName[17] =
