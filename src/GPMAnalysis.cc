@@ -12,12 +12,12 @@
 #include "G4SystemOfUnits.hh"
 #include "G4UnitsTable.hh"
 #include <math.h>
-/*
+
 #include <TROOT.h>
 #include <TFile.h>
 #include <TH1D.h>
 #include <TNtuple.h>
-*/
+
 GPMAnalysis* GPMAnalysis::singleton = 0;
 
 GPMAnalysis* GPMAnalysis::GetInstance() 
@@ -34,7 +34,7 @@ GPMAnalysis::~GPMAnalysis()
 
 GPMAnalysis::GPMAnalysis() 
 {
-  // m_ROOT_file = 0;
+   m_ROOT_file = 0;
 }
 
 void GPMAnalysis::PrepareNewRun(const G4Run*) 
@@ -44,9 +44,9 @@ void GPMAnalysis::PrepareNewRun(const G4Run*)
    n_electron = 0;
    n_positron = 0;
    G4cout << "Enter GPM Analysis" << G4endl;
-/*
+
   // m_ROOT_file = new TFile("./Results/WL_5keV.root", "RECREATE");
-   m_ROOT_file = new TFile("./50keV_GPM.root", "RECREATE");
+   m_ROOT_file = new TFile("./Test.root", "RECREATE");
    if (m_ROOT_file) {
       G4cout << "ROOT file (WL_50keV.root) made" << G4endl;
    } else {
@@ -91,7 +91,7 @@ void GPMAnalysis::PrepareNewRun(const G4Run*)
    t->Branch("Wavelength",&wavelength);
    t->Branch("dR", &dR);
    // stuff
-  */
+  
 }
 
 void GPMAnalysis::PrepareNewEvent(const G4Event*) 
@@ -140,14 +140,14 @@ void GPMAnalysis::EndOfEvent(const G4Event*)
 {
    //fill histograms and branches 
    
- //  t->Fill();
+   t->Fill();
 }
 
 void GPMAnalysis::EndOfRun(const G4Run* aRun) 
 {
    // Write / close root files
    G4int numEvents = aRun->GetNumberOfEvent();
-/*
+
    m_ROOT_file->cd();
    t->Write();
    G4cout << "Writing ROOT files ..." << G4endl;
@@ -155,7 +155,7 @@ void GPMAnalysis::EndOfRun(const G4Run* aRun)
    G4cout << "Closing ROOT files ..." << G4endl;
    m_ROOT_file->Close();
    delete m_ROOT_file;
-  */ 
+   
 }
 void GPMAnalysis::AddSecondary(const G4ParticleDefinition* part) 
 {
@@ -175,7 +175,7 @@ void GPMAnalysis::AddGapSecondary(const G4ParticleDefinition* part, G4int gapNum
 void GPMAnalysis::AddScintEDep(G4double Sedep) // In SteppingAction
 {
   scintEdep += Sedep;
-  //m_ROOT_histo1->Fill(Sedep);
+m_ROOT_histo1->Fill(Sedep);
 }
 
 void GPMAnalysis::SetEnergyDeposition(std::string someVolume, G4double someEdep, G4double someEdepI, G4double someTime) // in GasGapSensitiveDetector

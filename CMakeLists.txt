@@ -42,6 +42,7 @@ target_link_libraries(GPM ${Geant4_LIBRARIES} )
 set(GPM_SCRIPTS
     init_vis.mac
     vis.mac
+    run.mac
   )
 
 foreach(_script ${GPM_SCRIPTS})

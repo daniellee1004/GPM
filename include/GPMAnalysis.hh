@@ -7,11 +7,11 @@
 class G4Run;
 class G4Event;
 class G4ParticleDefinition;
-/*
+
 class TFile;
 class TTree;
 class TH1D;
-*/
+
 class G4Track; 
 
 class GPMAnalysis {
@@ -101,14 +101,14 @@ class GPMAnalysis {
       std::vector<G4double> momentumY;
       std::vector<G4double> momentumZ;
       
-/*      
+      
       // ROOT OBJECTS 
       TFile* m_ROOT_file;
       TH1D* m_ROOT_histo1;
 
       TTree* t;
       TTree* g;
- */     
+      
 };
 
 #endif
