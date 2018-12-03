@@ -30,6 +30,10 @@ class GasGapSensitiveDetector : public G4VSensitiveDetector {
       G4int contaSec_B;
       G4int contaTrack;
       G4int contaGar;
+      
+      G4int Trackhold;
+      std::vector<G4int> EindexId;
+      std::vector<G4int>::iterator Eit;
 
       std::vector<G4int> ttTrack;
       std::vector<G4int> ttTrack_B;

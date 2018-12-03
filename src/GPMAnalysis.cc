@@ -46,7 +46,7 @@ void GPMAnalysis::PrepareNewRun(const G4Run*)
    G4cout << "Enter GPM Analysis" << G4endl;
 
   // m_ROOT_file = new TFile("./Results/WL_5keV.root", "RECREATE");
-   m_ROOT_file = new TFile("./Test.root", "RECREATE");
+   m_ROOT_file = new TFile("./50keV_GPM.root", "RECREATE");
    if (m_ROOT_file) {
       G4cout << "ROOT file (WL_50keV.root) made" << G4endl;
    } else {
@@ -175,7 +175,7 @@ void GPMAnalysis::AddGapSecondary(const G4ParticleDefinition* part, G4int gapNum
 void GPMAnalysis::AddScintEDep(G4double Sedep) // In SteppingAction
 {
   scintEdep += Sedep;
-m_ROOT_histo1->Fill(Sedep);
+  m_ROOT_histo1->Fill(Sedep);
 }
 
 void GPMAnalysis::SetEnergyDeposition(std::string someVolume, G4double someEdep, G4double someEdepI, G4double someTime) // in GasGapSensitiveDetector

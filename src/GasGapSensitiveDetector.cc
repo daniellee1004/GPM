@@ -51,21 +51,21 @@ GasGapSensitiveDetector::~GasGapSensitiveDetector() {
 
 G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *) {
    G4double edep = step->GetTotalEnergyDeposit();
-   if (step->GetTrack()->GetDefinition() != G4OpticalPhoton::OpticalPhotonDefinition()) return false;
-   if (edep == 0.) return false;
+   //if (step->GetTrack()->GetDefinition() != G4OpticalPhoton::OpticalPhotonDefinition()) return false;
+   //if (edep == 0.) return false;
 
    G4TouchableHandle touchable = step->GetPreStepPoint()->GetTouchableHandle();
+   G4StepPoint* thePrePoint = step->GetPreStepPoint();
    G4VPhysicalVolume* thePrePV = touchable->GetVolume();
+   G4double pre_energy = thePrePoint->GetKineticEnergy();
    
    G4TouchableHandle postTouchable = step->GetPostStepPoint()->GetTouchableHandle();
    G4StepPoint* thePostPoint = step->GetPostStepPoint();
    G4VPhysicalVolume* thePostPV = postTouchable->GetVolume();
    G4double post_energy = thePostPoint->GetKineticEnergy();
-   
-   if (thePrePV == thePostPV || thePostPV->GetName() == "World") return false;
-   //G4cout << "Pre PV " << thePrePV->GetName() << G4endl;
-   //G4cout << "Post PV " << thePostPV->GetName() << G4endl;
-   //G4cout << "post Energy" << post_energy << G4endl;
+
+   if (thePrePV == thePostPV || thePostPV->GetName() != "GasGap1" || thePrePV->GetName() != "PC") return false;
+
    //if (post_energy != 0 ) return false; 
 
    G4int copyNo = touchable->GetVolume(0)->GetCopyNo();
@@ -73,6 +73,16 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *) 
    G4String volName = touchable->GetVolume(0)->GetName();
 
    G4Track* track = step->GetTrack();
+   G4int trackIndex = track->GetTrackID();
+
+  // Eit = std::find(EindexId.begin(), EindexId.end(), trackIndex);
+  // if (Eit == EindexId.end()) {
+  //   EindexId.push_back(trackIndex);
+  //   Trackhold += 1;
+  // } else {
+  //   return false; 
+  // }
+   //G4cout<< "Number of Tracks in Scint :" << Trackhold << G4endl;
    G4double energy = step->GetPreStepPoint()->GetKineticEnergy();
 
    double t = track->GetGlobalTime();
@@ -91,9 +101,18 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *) 
    const G4String procname = proc->GetProcessName();
 
    G4double edepI = edep-step->GetNonIonizingEnergyDeposit();
-   G4int trackIndex = track->GetTrackID();
    G4int parentIndex = track->GetParentID();
    double genz = track->GetVertexPosition().getZ();
+
+  // G4cout << "================================================== " << G4endl;
+  // G4cout << " Particle            " << track->GetDefinition() << G4endl;
+  // G4cout << " Track Number        " << trackIndex << G4endl;
+  // G4cout << " Parent Track Number " << parentIndex << G4endl;
+  // G4cout << " Pre PV              " << thePrePV->GetName() << G4endl;
+  // G4cout << " Post PV             " << thePostPV->GetName() << G4endl;
+  // G4cout << " post Energy         " << post_energy << G4endl;
+  // G4cout << " pre Energy          " << energy << G4endl;
+  // G4cout << "================================================== " << G4endl;
 
    G4String genprocess;
    if (track->GetCreatorProcess()!=0) {
@@ -108,6 +127,7 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *) 
 
    if ((*step->GetSecondary()).size()>0  && trackIndex == 1 && contaInteraction == 0) {
       zinteraction = z;
+    
       contaInteraction = 1; 
    }
 

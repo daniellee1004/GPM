@@ -60,12 +60,13 @@ int main(int argc,char** argv)
   if (argc == 1) {
      ui = new G4UIExecutive(argc, argv);
   }   
-  G4Random::setTheEngine(new CLHEP::RanecuEngine());
 
+  G4Random::setTheEngine(new CLHEP::RanecuEngine());
+  G4Random::setTheSeed(time(NULL)+38999008.);   
+  
   G4RunManager * runManager = new G4RunManager;
 
   // Seed the random number generator manually
-  G4Random::setTheSeed(time(NULL)+38999008.);   
   //G4Random::setTheSeed(myseed);
 
   // Set mandatory initialization classes
